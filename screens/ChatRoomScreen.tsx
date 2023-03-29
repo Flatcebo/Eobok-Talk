@@ -19,7 +19,7 @@ import Icon from 'react-native-vector-icons/MaterialIcons';
 import BorderInput from '../components/BorderInput';
 import {RootStackNavigationProp} from './RootStack';
 import {useCallback, useEffect, useMemo, useState} from 'react';
-import {SearchModalButton} from '../components/AllButtons';
+import {FloatingButton, SearchModalButton} from '../components/AllButtons';
 
 const ChatRoomScreen = () => {
   const navigation = useNavigation<RootStackNavigationProp>();
@@ -105,7 +105,20 @@ const ChatRoomScreen = () => {
   }, []);
 
   return (
-    <View>
+    <View style={styles.mainView}>
+      {/* zIndex를 먹이면 이상한 공간이 생겨서 클릭시 닫힘 */}
+      {Platform.OS === 'android' ? undefined : (
+        <View
+          style={{
+            position: 'absolute',
+            width: 400,
+            zIndex: 1,
+            // borderWidth: 1,
+          }}>
+          <FloatingButton />
+        </View>
+      )}
+
       <ScrollView style={styles.scrollView}>
         {/* <View> */}
         <View style={styles.view}>
@@ -211,7 +224,7 @@ const ChatRoomScreen = () => {
             </View>
           </View>
         </View>
-        <View style={styles.test}></View>
+        {/* <View style={styles.test}></View> */}
       </ScrollView>
 
       <View>
@@ -247,15 +260,21 @@ const ChatRoomScreen = () => {
 
 const styles = StyleSheet.create({
   block: {margin: 5.5, marginRight: 6},
-  scrollView: {
+  mainView: {
     height: '100%',
-    // backgroundColor: 'black',
+    zIndex: 0,
+  },
+  scrollView: {
+    top: Platform.OS === 'android' ? '-8%' : '-9%',
+    marginTop: Platform.OS === 'android' ? '14%' : '19%',
   },
   view: {
     width: '95.5%',
+    // marginTop: Platform.OS === 'android' ? '14%' : '19%',
     flexDirection: 'row',
     alignSelf: 'center',
     alignItems: 'center',
+    zIndex: 0,
   },
   nickcname: {
     color: 'black',
@@ -296,6 +315,7 @@ const styles = StyleSheet.create({
     width: '100%',
     height: '100%',
     borderRadius: 18,
+    zIndex: 0,
   },
   asideMessageText: {
     marginBottom: '10%',
@@ -346,9 +366,9 @@ const styles = StyleSheet.create({
     top: Platform.OS === 'android' ? '22%' : '17%',
     right: '4.5%',
   },
-  test: {
-    height: Platform.OS === 'android' ? 40 : 60,
-    top: -200,
-  },
+  // test: {
+  //   height: Platform.OS === 'android' ? 40 : 60,
+  //   top: -200,
+  // },
 });
 export default ChatRoomScreen;

@@ -1,7 +1,3 @@
-// 2023-02-28
-// 채팅룸 내에서 모달 처리 해야 백그라운드 터치시 꺼짐 가능
-// 스택에 Header Right Icon 때문에 어려울수 있음.
-
 import {
   createNativeStackNavigator,
   NativeStackNavigationProp,
@@ -52,6 +48,7 @@ import InChatRoomSetting from './InChatRoomSetting';
 import {useEffect, useLayoutEffect, useState} from 'react';
 import BorderInput from '../components/BorderInput';
 import {SearchBar} from '@rneui/themed';
+import ChatsNewRoomScreen from './ChatsNewRoomScreen';
 // import {ChatRoomSearchBarModal} from '../components/AllModals';
 
 type RootStackParamList = {
@@ -69,6 +66,7 @@ type RootStackParamList = {
   ChatRoomDrawer: RootStackParamList | undefined;
   ChatImgVid: RootStackParamList | undefined;
   InChatRoomSetting: RootStackParamList | undefined;
+  NewChats: RootStackParamList | undefined;
   AddHP: RootStackParamList | undefined;
   AddID: RootStackParamList | undefined;
 };
@@ -172,14 +170,30 @@ const RootStack = () => {
             headerShown: true,
             title: '박쇼티',
             headerBackVisible: true,
-            headerRight: () => (
-              <>
-                <Text>
-                  <SearchModalButton />
-                </Text>
-              </>
-            ),
+
+            // IOS는 닫기 버튼 안먹음 - 이유는 헤더에 있는 버튼만 먹음.
+            headerRight: () =>
+              Platform.OS === 'android' ? (
+                <>
+                  <>
+                    <Text>
+                      <SearchModalButton />
+                    </Text>
+                  </>
+                  {/* <>
+                    <Text>
+                      <DrawerMenuButton />
+                    </Text>
+                  </> */}
+                </>
+              ) : undefined,
           }}
+        />
+
+        <Stack.Screen
+          name="NewChats"
+          component={ChatsNewRoomScreen}
+          options={{headerShown: true, title: '대화상대 초대'}}
         />
 
         <Stack.Screen

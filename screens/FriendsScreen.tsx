@@ -101,26 +101,30 @@ const FriendScreen = () => {
           </Pressable>
         </View>
       </View>
-      <ProfilesCard borderBottomLine>존예녀</ProfilesCard>
+      <ProfilesCard profileBlock borderBottomLine>
+        존예녀
+      </ProfilesCard>
       <WidthLine style={styles.borderBottom} />
       <FlatList
+        style={{height: Platform.OS === 'android' ? '76%' : '84%'}}
         data={undefined}
         renderItem={renderItem}
         ListHeaderComponent={
           <View>
-            <ProfilesCard>1</ProfilesCard>
-
-            <ProfilesCard>2</ProfilesCard>
-            <ProfilesCard>3</ProfilesCard>
-            <ProfilesCard>4</ProfilesCard>
-            <ProfilesCard>5</ProfilesCard>
-            <ProfilesCard>6</ProfilesCard>
-            <ProfilesCard>7</ProfilesCard>
-            <ProfilesCard>8</ProfilesCard>
-            <ProfilesCard>9</ProfilesCard>
-            <ProfilesCard>10</ProfilesCard>
-            <ProfilesCard>11</ProfilesCard>
-            <ProfilesCard>12</ProfilesCard>
+            <ProfilesCard profileBlock>1</ProfilesCard>
+            <ProfilesCard profileBlock>2</ProfilesCard>
+            <ProfilesCard profileBlock>3</ProfilesCard>
+            <ProfilesCard profileBlock>4</ProfilesCard>
+            <ProfilesCard profileBlock>5</ProfilesCard>
+            <ProfilesCard profileBlock>6</ProfilesCard>
+            <ProfilesCard profileBlock>7</ProfilesCard>
+            <ProfilesCard profileBlock>8</ProfilesCard>
+            <ProfilesCard profileBlock>9</ProfilesCard>
+            <ProfilesCard profileBlock>10</ProfilesCard>
+            <ProfilesCard profileBlock>11</ProfilesCard>
+            <ProfilesCard profileBlock>12</ProfilesCard>
+            <ProfilesCard profileBlock>13</ProfilesCard>
+            <ProfilesCard profileBlock>14</ProfilesCard>
           </View>
         }
       />
@@ -133,17 +137,17 @@ const styles = StyleSheet.create({
   topBar: {
     flexDirection: 'row',
     paddingHorizontal: 20,
-    paddingVertical: 20,
+    paddingVertical: 12,
   },
   headerText: {
     fontSize: 24,
     fontWeight: 'bold',
-    flex: 2.7,
+    flex: 2.67,
     color: 'black',
   },
   topIcons: {
     flexDirection: 'row',
-    flex: 1,
+    flex: 0.87,
     display: 'flex',
     alignItems: 'center',
     justifyContent: 'space-between',

@@ -19,11 +19,10 @@ Platform.OS === 'android' ? StatusBar.setTranslucent(true) : null;
 
 StatusBar.setBarStyle('dark-content');
 
-const ProfilesCard = ({children}: any) => {
+const ProfilesCard = ({children, profileBlock, style, stateMessage}: any) => {
   const dimensions = useWindowDimensions();
   const size = (dimensions.width - 3) / 7.5;
   function truncate(text: any) {
-    // 정규식을 사용해 모든 줄 바꿈 문자 제거
     const replaced = text.replace(/\n/g, '');
     if (replaced.length <= 15) {
       return replaced;
@@ -49,7 +48,12 @@ const ProfilesCard = ({children}: any) => {
         }}>
         <View style={styles.view}>
           <Image
-            style={[styles.image, styles.block, {width: size, height: size}]}
+            style={[
+              styles.image,
+              profileBlock && styles.block,
+              {width: size, height: size},
+              style,
+            ]}
             source={{
               uri: 'https://blogfiles.pstatic.net/MjAyMjA5MDRfMjQx/MDAxNjYyMjc0Mjc4NDM0.qN12EODdiqrVmvoAuhFxH30mbCRaskvweJ_xZC4uQLIg.xbi9vYcqqXbNWGAo4P4wUhl8VxSGxwwIKINobXL-Apcg.JPEG.seoraestudio/220815.%EC%9D%B4%ED%98%84%EC%A7%846249.jpg',
             }}
@@ -185,6 +189,7 @@ const ProfilesCard = ({children}: any) => {
 };
 const styles = StyleSheet.create({
   block: {margin: 5.5, marginRight: 6},
+  rightMargin: {marginRight: 6, marginTop: 3},
   view: {
     width: '95.5%',
     flexDirection: 'row',

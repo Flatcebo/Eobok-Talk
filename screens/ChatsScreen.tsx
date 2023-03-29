@@ -1,6 +1,6 @@
 import {useIsFocused, useNavigation} from '@react-navigation/native';
 import React, {useEffect, useState} from 'react';
-import {View, Text, StyleSheet, Pressable} from 'react-native';
+import {View, Text, StyleSheet, Pressable, BackHandler} from 'react-native';
 import ChatsCard from '../components/ChatsCard';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import {RootStackNavigationProp} from './RootStack';
@@ -9,6 +9,15 @@ import {SafeAreaView} from 'react-native-safe-area-context';
 
 const ChatsScreen = () => {
   const navigation = useNavigation<RootStackNavigationProp>();
+
+  const backScreens = () => {
+    BackHandler.exitApp();
+    return true;
+  };
+  const backHandler = BackHandler.addEventListener(
+    'hardwareBackPress',
+    backScreens,
+  );
 
   return (
     <SafeAreaView>
@@ -26,7 +35,14 @@ const ChatsScreen = () => {
             />
           </Text>
           <Text>
-            <Icon name="person-add-alt-1" size={30} style={{color: 'black'}} />
+            <Icon
+              name="person-add-alt-1"
+              size={30}
+              style={{color: 'black'}}
+              onPress={() => {
+                navigation.push('NewChats');
+              }}
+            />
           </Text>
           <Text>
             <Icon name="settings" size={28} style={{color: 'black'}} />
@@ -73,7 +89,7 @@ const styles = StyleSheet.create({
   topBar: {
     flexDirection: 'row',
     paddingHorizontal: 20,
-    paddingVertical: 20,
+    paddingVertical: 12,
   },
   headerText: {
     fontSize: 24,
@@ -83,7 +99,7 @@ const styles = StyleSheet.create({
   },
   topIcons: {
     flexDirection: 'row',
-    flex: 1,
+    flex: 0.75,
     display: 'flex',
     alignItems: 'center',
     justifyContent: 'space-between',
