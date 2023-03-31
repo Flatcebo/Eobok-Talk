@@ -1,6 +1,7 @@
 import {useNavigation} from '@react-navigation/native';
 import {useState} from 'react';
 import {
+  BackHandler,
   FlatList,
   Modal,
   Platform,
@@ -31,6 +32,15 @@ const FriendScreen = () => {
   const PushFriendSettingModal = () => {
     navigation.push('FriendSettingModal');
   };
+
+  const backScreens = () => {
+    navigation.pop();
+    return true;
+  };
+  const backHandler = BackHandler.addEventListener(
+    'hardwareBackPress',
+    backScreens,
+  );
 
   return (
     <SafeAreaView>

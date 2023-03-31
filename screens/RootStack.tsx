@@ -49,6 +49,8 @@ import {useEffect, useLayoutEffect, useState} from 'react';
 import BorderInput from '../components/BorderInput';
 import {SearchBar} from '@rneui/themed';
 import ChatsNewRoomScreen from './ChatsNewRoomScreen';
+import {ChatRoomSettingModal} from '../components/AllModals';
+import ChatRoomModify from './ChatRoomModify';
 // import {ChatRoomSearchBarModal} from '../components/AllModals';
 
 type RootStackParamList = {
@@ -67,6 +69,8 @@ type RootStackParamList = {
   ChatImgVid: RootStackParamList | undefined;
   InChatRoomSetting: RootStackParamList | undefined;
   NewChats: RootStackParamList | undefined;
+  ChatRoomSettingModal: RootStackParamList | undefined;
+  ChatRoomModify: RootStackParamList | undefined;
   AddHP: RootStackParamList | undefined;
   AddID: RootStackParamList | undefined;
 };
@@ -174,18 +178,9 @@ const RootStack = () => {
             // IOS는 닫기 버튼 안먹음 - 이유는 헤더에 있는 버튼만 먹음.
             headerRight: () =>
               Platform.OS === 'android' ? (
-                <>
-                  <>
-                    <Text>
-                      <SearchModalButton />
-                    </Text>
-                  </>
-                  {/* <>
-                    <Text>
-                      <DrawerMenuButton />
-                    </Text>
-                  </> */}
-                </>
+                <Text>
+                  <SearchModalButton />
+                </Text>
               ) : undefined,
           }}
         />
@@ -193,7 +188,33 @@ const RootStack = () => {
         <Stack.Screen
           name="NewChats"
           component={ChatsNewRoomScreen}
-          options={{headerShown: true, title: '대화상대 초대'}}
+          options={{
+            headerShown: true,
+            title: '대화상대 초대',
+            headerRight: () => (
+              <Pressable>
+                <Text style={{fontSize: Platform.OS === 'android' ? 18 : 16}}>
+                  확인
+                </Text>
+              </Pressable>
+            ),
+          }}
+        />
+
+        <Stack.Screen
+          name="ChatRoomModify"
+          component={ChatRoomModify}
+          options={{
+            headerShown: true,
+            title: '채팅방 편집',
+            headerRight: () => (
+              <Pressable>
+                <Text style={{fontSize: Platform.OS === 'android' ? 18 : 16}}>
+                  모두 선택
+                </Text>
+              </Pressable>
+            ),
+          }}
         />
 
         <Stack.Screen
@@ -231,6 +252,15 @@ const RootStack = () => {
           <Stack.Screen
             name="FriendSettingModal"
             component={FriendSettingModal}
+            options={{
+              headerShown: false,
+              presentation: 'containedTransparentModal',
+              // contentStyle: {backgroundColor: '#fffffff'},
+            }}
+          />
+          <Stack.Screen
+            name="ChatRoomSettingModal"
+            component={ChatRoomSettingModal}
             options={{
               headerShown: false,
               presentation: 'containedTransparentModal',

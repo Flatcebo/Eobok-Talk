@@ -221,6 +221,54 @@ export function ChatRoomDrawerModal({
   );
 }
 
+export function ChatRoomSettingModal({
+  visible,
+  onRequestClose,
+  onPressBackClose,
+}: any) {
+  const navigation = useNavigation<RootStackNavigationProp>();
+  return (
+    <Pressable
+      onPress={() => {
+        navigation.pop();
+      }}
+      style={{flex: 1}}>
+      <View
+        style={{
+          position: 'absolute',
+          width: '20%',
+          height: Platform.OS === 'android' ? '10%' : '8%',
+          top: '10.5%',
+          right: '5%',
+          // borderRadius: 10,
+        }}>
+        <Pressable
+          style={{
+            flex: 1,
+            justifyContent: 'center',
+            borderTopStartRadius: 10,
+            borderTopEndRadius: 10,
+            backgroundColor: 'white',
+          }}
+          onPress={() => {
+            navigation.replace('ChatRoomModify');
+          }}>
+          <Text style={{textAlign: 'center'}}>편집</Text>
+        </Pressable>
+        <Pressable
+          style={{
+            flex: 1,
+            justifyContent: 'center',
+            borderBottomStartRadius: 10,
+            borderBottomEndRadius: 10,
+            backgroundColor: 'white',
+          }}>
+          <Text style={{textAlign: 'center'}}>정렬</Text>
+        </Pressable>
+      </View>
+    </Pressable>
+  );
+}
 // export function ChatRoomSearchBarModal({
 //   visible,
 //   onRequestClose,
@@ -340,5 +388,5 @@ const styles = StyleSheet.create({
   //   backgroundColor: 'black',
   // },
 
-  // --------------------------------------------------------------------------------------------------------------ChatRoomSearchBarModal-----------------------------------------------------
+  // --------------------------------------------------------------------------------------------------------------ChatRoom-----------------------------------------------------
 });

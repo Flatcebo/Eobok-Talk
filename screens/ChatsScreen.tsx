@@ -1,14 +1,32 @@
 import {useIsFocused, useNavigation} from '@react-navigation/native';
 import React, {useEffect, useState} from 'react';
-import {View, Text, StyleSheet, Pressable, BackHandler} from 'react-native';
+import {
+  View,
+  Text,
+  StyleSheet,
+  Pressable,
+  BackHandler,
+  Alert,
+  Platform,
+  StatusBar,
+} from 'react-native';
 import ChatsCard from '../components/ChatsCard';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import {RootStackNavigationProp} from './RootStack';
 import {FlatList} from 'react-native-gesture-handler';
 import {SafeAreaView} from 'react-native-safe-area-context';
+import {ChatRoomSettingModal} from '../components/AllModals';
 
 const ChatsScreen = () => {
   const navigation = useNavigation<RootStackNavigationProp>();
+
+  Platform.OS === 'android'
+    ? [
+        StatusBar.setTranslucent(true),
+        StatusBar.setBarStyle('dark-content'),
+        StatusBar.setHidden(false),
+      ]
+    : StatusBar.setBarStyle('default');
 
   const backScreens = () => {
     BackHandler.exitApp();
@@ -19,6 +37,7 @@ const ChatsScreen = () => {
     backScreens,
   );
 
+  const [modalVisible, setModalVisible] = useState<boolean>(false);
   return (
     <SafeAreaView>
       <View style={styles.topBar}>
@@ -45,10 +64,26 @@ const ChatsScreen = () => {
             />
           </Text>
           <Text>
-            <Icon name="settings" size={28} style={{color: 'black'}} />
+            <Icon
+              name="settings"
+              onPress={() => {
+                navigation.push('ChatRoomSettingModal');
+              }}
+              size={28}
+              style={{color: 'black'}}
+            />
           </Text>
         </View>
       </View>
+      {/* <ChatRoomSettingModal
+        visible={modalVisible}
+        onRequestClose={() => {
+          setModalVisible(!modalVisible);
+        }}
+        onPressBackClose={() => {
+          setModalVisible(!modalVisible);
+        }}
+      /> */}
 
       <FlatList
         data={undefined}

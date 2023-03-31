@@ -19,7 +19,13 @@ Platform.OS === 'android' ? StatusBar.setTranslucent(true) : null;
 
 StatusBar.setBarStyle('dark-content');
 
-const ProfilesCard = ({children, profileBlock, style, stateMessage}: any) => {
+const ProfilesCard = ({
+  children,
+  profileBlock,
+  inviteBlock,
+  style,
+  stateMessage,
+}: any) => {
   const dimensions = useWindowDimensions();
   const size = (dimensions.width - 3) / 7.5;
   function truncate(text: any) {
@@ -51,6 +57,7 @@ const ProfilesCard = ({children, profileBlock, style, stateMessage}: any) => {
             style={[
               styles.image,
               profileBlock && styles.block,
+              inviteBlock && styles.rightMargin,
               {width: size, height: size},
               style,
             ]}
@@ -189,7 +196,7 @@ const ProfilesCard = ({children, profileBlock, style, stateMessage}: any) => {
 };
 const styles = StyleSheet.create({
   block: {margin: 5.5, marginRight: 6},
-  rightMargin: {marginRight: 6, marginTop: 3},
+  rightMargin: {marginTop: 4, marginRight: 6},
   view: {
     width: '95.5%',
     flexDirection: 'row',
