@@ -49,8 +49,16 @@ import {useEffect, useLayoutEffect, useState} from 'react';
 import BorderInput from '../components/BorderInput';
 import {SearchBar} from '@rneui/themed';
 import ChatsNewRoomScreen from './ChatsNewRoomScreen';
-import {ChatRoomSettingModal} from '../components/AllModals';
+import {
+  ChatRoomSettingModal,
+  ChatRoomStackModal,
+  LongPressModal,
+} from '../components/AllModals';
 import ChatRoomModify from './ChatRoomModify';
+import SeeMoreSetting from './SeeMoreSetting';
+import MyAccountScreen from './MyAccountScreen';
+import MyPrivacyScreen from './MyPrivacyScreen';
+import MyNotificationScreen from './MyNotificationScreen';
 // import {ChatRoomSearchBarModal} from '../components/AllModals';
 
 type RootStackParamList = {
@@ -71,8 +79,14 @@ type RootStackParamList = {
   NewChats: RootStackParamList | undefined;
   ChatRoomSettingModal: RootStackParamList | undefined;
   ChatRoomModify: RootStackParamList | undefined;
+  ChatRoomStackModal: RootStackParamList | undefined;
   AddHP: RootStackParamList | undefined;
   AddID: RootStackParamList | undefined;
+  SeeMoreSetting: RootStackParamList | undefined;
+  MyAccount: RootStackParamList | undefined;
+  MyPrivacy: RootStackParamList | undefined;
+  MyNotification: RootStackParamList | undefined;
+  LongPressModal: RootStackParamList | undefined;
 };
 
 type DrawerStackParamList = {
@@ -235,7 +249,38 @@ const RootStack = () => {
             headerRight: () => <SubmitButton />,
           }}
         />
-
+        <Stack.Screen
+          name="SeeMoreSetting"
+          component={SeeMoreSetting}
+          options={{
+            headerShown: true,
+            title: '설정',
+          }}
+        />
+        <Stack.Screen
+          name="MyAccount"
+          component={MyAccountScreen}
+          options={{
+            headerShown: true,
+            title: '나의 계정',
+          }}
+        />
+        <Stack.Screen
+          name="MyPrivacy"
+          component={MyPrivacyScreen}
+          options={{
+            headerShown: true,
+            title: '개인/보안',
+          }}
+        />
+        <Stack.Screen
+          name="MyNotification"
+          component={MyNotificationScreen}
+          options={{
+            headerShown: true,
+            title: '알림',
+          }}
+        />
         <Stack.Group screenOptions={{}}>
           {/* 친구 추가 모달 백그라운드 터치시 종료 가능하게 만들기 */}
           <Stack.Screen
@@ -261,6 +306,23 @@ const RootStack = () => {
           <Stack.Screen
             name="ChatRoomSettingModal"
             component={ChatRoomSettingModal}
+            options={{
+              headerShown: false,
+              presentation: 'containedTransparentModal',
+              // contentStyle: {backgroundColor: '#fffffff'},
+            }}
+          />
+          <Stack.Screen
+            name="ChatRoomStackModal"
+            component={ChatRoomStackModal}
+            options={{
+              headerShown: false,
+              presentation: 'containedTransparentModal',
+            }}
+          />
+          <Stack.Screen
+            name="LongPressModal"
+            component={LongPressModal}
             options={{
               headerShown: false,
               presentation: 'containedTransparentModal',

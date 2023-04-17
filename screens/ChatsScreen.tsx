@@ -75,15 +75,6 @@ const ChatsScreen = () => {
           </Text>
         </View>
       </View>
-      {/* <ChatRoomSettingModal
-        visible={modalVisible}
-        onRequestClose={() => {
-          setModalVisible(!modalVisible);
-        }}
-        onPressBackClose={() => {
-          setModalVisible(!modalVisible);
-        }}
-      /> */}
 
       <FlatList
         data={undefined}
@@ -134,7 +125,7 @@ const styles = StyleSheet.create({
   },
   topIcons: {
     flexDirection: 'row',
-    flex: 0.75,
+    flex: Platform.OS === 'android' ? 0.75 : 0.8,
     display: 'flex',
     alignItems: 'center',
     justifyContent: 'space-between',

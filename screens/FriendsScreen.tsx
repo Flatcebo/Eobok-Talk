@@ -157,7 +157,7 @@ const styles = StyleSheet.create({
   },
   topIcons: {
     flexDirection: 'row',
-    flex: 0.87,
+    flex: Platform.OS === 'android' ? 0.87 : 0.9,
     display: 'flex',
     alignItems: 'center',
     justifyContent: 'space-between',

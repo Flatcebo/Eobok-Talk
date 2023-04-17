@@ -12,22 +12,31 @@ import {
   View,
 } from 'react-native';
 import {useNavigation} from '@react-navigation/native';
-import {SafeAreaView} from 'react-native-safe-area-context';
-import {ScrollView} from 'react-native-gesture-handler';
-import {Button, Text} from 'react-native-paper';
+
+import {
+  Gesture,
+  GestureDetector,
+  GestureHandlerRootView,
+  ScrollView,
+} from 'react-native-gesture-handler';
+import {Button, Modal, Text} from 'react-native-paper';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import BorderInput from '../components/BorderInput';
 import {RootStackNavigationProp} from './RootStack';
 import {useCallback, useEffect, useMemo, useState} from 'react';
 import {FloatingButton, SearchModalButton} from '../components/AllButtons';
+import {Menu, MenuOption, MenuOptions} from 'react-native-popup-menu';
+import {ChatRoomDrawerModal} from '../components/AllModals';
 
 const ChatRoomScreen = () => {
   const navigation = useNavigation<RootStackNavigationProp>();
   const dimensions = useWindowDimensions();
   const size = (dimensions.width - 3) / 10;
-
   const [message, setMessage] = useState('');
   const [open, setOpen] = useState<boolean>(false);
+  const [visible, setVisible] = useState(false);
+
+  // console.log(Platform.OS === 'android' ? performance.now() : undefined);
 
   const handleChange = (
     e:
@@ -43,56 +52,12 @@ const ChatRoomScreen = () => {
       };
     }, [text]);
   };
-  //   useEffect(() => {
-  //     const backScreen = () => {
-
-  //         return(
-  //             <>
-  //          <Pressable onPress={ () => {
-  //             if (setOpen(false) === undefined) {
-  //               setOpen(true);
-  //             }
-
-  //         }}><Text>Click</Text></Pressable>
-  //         </>
-  //         )
-  //     }
-  //     );
-  //     return true;
-  //     };
-
-  //     const backHandler = BackHandler.addEventListener(
-  //       'hardwareBackPress',
-  //       backScreen,
-  //     );
-
-  //     return () => backHandler.remove();
-  // }, []);
 
   useEffect(() => {
     const backScreens = () => {
-      //   <>
-      //     <View>
-      //       <Pressable
-      //         style={{width: 100, height: 100, top: -200, borderWidth: 1}}
-      //         onPress={() => {
       setOpen(false) === setOpen(false)
         ? navigation.pop()
         : backHandler.remove();
-      //   if (setOpen(false) === undefined) {
-      //     navigation.pop();
-      // backHandler.remove();
-      // setOpen(true);
-      //   } else {
-      //     backHandler.remove();
-      //   }
-      //   BackHandler.removeEventListener;
-      //           }
-      //         }}>
-      //         <Text>Click</Text>
-      //       </Pressable>
-      //     </View>
-      //   </>;
 
       return true;
     };
@@ -104,9 +69,36 @@ const ChatRoomScreen = () => {
     return () => backHandler.remove();
   }, []);
 
+  const longPressGesture = Gesture.LongPress()
+    .minDuration(300)
+    .onStart(e => {
+      navigation.push('LongPressModal');
+      // <View style={{width: 200, height: 200, backgroundColor: 'black'}}>
+      //   <Text>Hi</Text>
+      // </View>,
+      // <Modal visible={visible}>
+      //   <Pressable
+      //     style={{width: 200, height: 200, backgroundColor: 'black'}}
+      //     onPress={() => {
+      //       setVisible(true);
+      //     }}>
+      //     <Text> gogo</Text>
+      //   </Pressable>
+      //   <Pressable
+      //     onPress={() => {
+      //       setVisible(false);
+      //     }}>
+      //     <View style={{width: 200, height: 200, backgroundColor: 'black'}}>
+      //       <Text> HIHI</Text>
+      //     </View>
+      //   </Pressable>
+      // </Modal>,
+
+      // <ChatRoomDrawerModal visible={visible} />,
+    });
+
   return (
     <View style={styles.mainView}>
-      {/* zIndex를 먹이면 이상한 공간이 생겨서 클릭시 닫힘 */}
       {Platform.OS === 'android' ? undefined : (
         <View
           style={{
@@ -136,9 +128,13 @@ const ChatRoomScreen = () => {
           </View>
         </View>
         <View style={styles.messageLayout}>
-          <View style={styles.messageView}>
-            <Text>HI.</Text>
-          </View>
+          <GestureHandlerRootView>
+            <GestureDetector gesture={longPressGesture}>
+              <View style={[styles.messageView, {borderWidth: 1}]}>
+                <Text>HIq.</Text>
+              </View>
+            </GestureDetector>
+          </GestureHandlerRootView>
 
           <View style={styles.messageView}>
             <Text>HI.</Text>

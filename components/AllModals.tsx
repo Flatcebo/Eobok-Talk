@@ -1,3 +1,4 @@
+import Clipboard from '@react-native-clipboard/clipboard';
 import {useNavigation} from '@react-navigation/native';
 import {useState} from 'react';
 import {
@@ -262,6 +263,9 @@ export function ChatRoomSettingModal({
             borderBottomStartRadius: 10,
             borderBottomEndRadius: 10,
             backgroundColor: 'white',
+          }}
+          onPress={() => {
+            navigation.replace('ChatRoomStackModal');
           }}>
           <Text style={{textAlign: 'center'}}>정렬</Text>
         </Pressable>
@@ -269,39 +273,133 @@ export function ChatRoomSettingModal({
     </Pressable>
   );
 }
-// export function ChatRoomSearchBarModal({
-//   visible,
-//   onRequestClose,
-//   onPress,
-//   onPressBackClose,
-//   onPressSettingIcon,
-//   onPressed,
-// }: any) {
-//   return (
 
-//     <Modal
-//       visible={visible}
-//       transparent={true}
-//       // animationType="fade"
-//       statusBarTranslucent={false}
-//       onRequestClose={onRequestClose}
-//       presentationStyle="overFullScreen"
-//       style={{width: 30, height: 30, backgroundColor: 'black'}}>
-//       <View style={{width: '20%', height: '20%', borderWidth: 1}}>
-//         <View>
-//           <Pressable
-//             onPress={onPress}
-//             style={{width: '100%', height: '100%', borderWidth: 1}}>
-//             <Text>hi</Text>
-//           </Pressable>
-//         </View>
-//         <View></View>
-//         <View></View>
-//       </View>
-//     </Modal>
+export function ChatRoomStackModal() {
+  const navigation = useNavigation<RootStackNavigationProp>();
+  return (
+    <Pressable
+      onPress={() => {
+        navigation.pop();
+      }}
+      style={{flex: 1}}>
+      <View
+        style={{
+          top: '35%',
+          alignItems: 'center',
+          justifyContent: 'center',
+          // borderWidth: 1,
+        }}>
+        <View
+          style={{
+            // width: '50%',
+            // height: '50%',
+            backgroundColor: 'white',
+            justifyContent: 'center',
+            alignItems: 'center',
+            borderRadius: 10,
+          }}>
+          <Pressable style={{paddingVertical: '3%'}}>
+            <Text style={{fontSize: 16, fontWeight: 'bold'}}>
+              채팅방 순서 정렬
+            </Text>
+          </Pressable>
+          <Pressable
+            style={{
+              padding: '3%',
+              flexDirection: 'row',
+              alignItems: 'center',
+              // justifyContent: 'space-between',
+              // borderWidth: 1,
+            }}>
+            <Text style={{}}>최근에 온 순</Text>
+            <Icon name="check" size={24} />
+          </Pressable>
+          <Pressable
+            style={{
+              paddingVertical: '3%',
+              paddingHorizontal: '10%',
+              // borderWidth: 1,
+              flexDirection: 'row',
+              alignItems: 'center',
+            }}>
+            <Text>안읽은 순</Text>
+            <Icon name="check" size={24} />
+          </Pressable>
+          <Pressable
+            style={{
+              paddingVertical: '3%',
+              paddingHorizontal: '7%',
+              flexDirection: 'row',
+              alignItems: 'center',
+            }}>
+            <Text>즐겨찾기 순</Text>
+            <Icon name="check" size={24} />
+          </Pressable>
+        </View>
+      </View>
+    </Pressable>
+  );
+}
 
-//   );
-// }
+export function LongPressModal() {
+  const navigation = useNavigation<RootStackNavigationProp>();
+  const [copiedText, setCopiedText] = useState<string | null>('');
+
+  const copyToClipboard = () => {
+    Clipboard.setString('hello world');
+  };
+  const fetchCopiedText = async () => {
+    const text = await Clipboard.getString();
+    setCopiedText(text);
+  };
+
+  return (
+    <Pressable
+      style={{
+        flex: 1,
+        justifyContent: 'center',
+        alignItems: 'center',
+        backgroundColor: '#000000',
+      }}
+      onPress={() => {
+        navigation.pop();
+      }}>
+      <View
+        style={{
+          backgroundColor: 'white',
+          // width: 150,
+          alignItems: 'center',
+          borderWidth: 1,
+          borderRadius: 10,
+        }}>
+        <Pressable
+          onPress={copyToClipboard}
+          style={{
+            paddingHorizontal: '20%',
+            paddingVertical: '3%',
+          }}>
+          <Text>복사</Text>
+        </Pressable>
+        <Pressable
+          style={{
+            paddingHorizontal: '20%',
+            paddingVertical: '3%',
+          }}>
+          <Text>복사</Text>
+        </Pressable>
+        <Pressable style={{paddingHorizontal: '20%', paddingVertical: '3%'}}>
+          <Text>복사</Text>
+        </Pressable>
+        <Pressable style={{paddingHorizontal: '20%', paddingVertical: '3%'}}>
+          <Text>복사</Text>
+        </Pressable>
+        <Pressable style={{paddingHorizontal: '20%', paddingVertical: '3%'}}>
+          <Text>복사</Text>
+        </Pressable>
+      </View>
+    </Pressable>
+  );
+}
 
 const styles = StyleSheet.create({
   viewLayout: {
